@@ -31,10 +31,11 @@ public class ClientRestController {
         roles.add(new Role("User"));
         Client client = new Client("First name", "Last name",
                 "1@mail.ru", "88888", "123", roles);
-        if(clientService.add(client) != null){
+        Client client1 = clientService.add(client);
+        if(client1 == null){
             return "error";
         } else {
-            return "Success";
+            return "Success with id=" + client1.getId();
         }
     }
 
