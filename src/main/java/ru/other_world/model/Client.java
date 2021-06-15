@@ -1,5 +1,7 @@
 package ru.other_world.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,6 +28,10 @@ public class Client implements UserDetails {
     @Column(name = "phone")
     private String phone;
 
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Event> events;
+
     @Column(name = "password")
     private String password;
 
@@ -37,14 +43,16 @@ public class Client implements UserDetails {
 
     public Client(){
         roles = new ArrayList<>();
+        events = new ArrayList<>();
     }
 
     public Client(String firstName, String lastName, String email, String phone,
-                  String password, List<Role> roles){
+                  List<Event> events, String password, List<Role> roles){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
+        this.events = events;
         this.password = password;
         this.roles = roles;
     }
@@ -57,6 +65,7 @@ public class Client implements UserDetails {
         this.phone = client.phone;
         this.password = client.password;
         this.roles = client.roles;
+        this.events = client.events;
     }
 
     public Long getId() {
@@ -121,6 +130,14 @@ public class Client implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override
