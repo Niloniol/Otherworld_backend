@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.other_world.model.Client;
@@ -32,13 +35,13 @@ public class ClientRestController {
         return "Hello world!";
     }
 
-    @GetMapping("/putuser")
+    @GetMapping("/users/putuser")
     public String put(){
         List<Role> roles = new ArrayList<>();
         roles.add(new Role("User"));
         List<Event> events = new ArrayList<>();
         events.add(new Event(TypeOfEvent.hallRental,"No com",
-                LocalDateTime.now(), LocalDateTime.parse("2021-11-15T08:22:12")));
+                LocalDateTime.now(), LocalDateTime.parse("2021-06-18T08:22:12")));
         Client client = new Client("First name", "Last name",
                 "1@mail.ru", "88888", events, "123", roles);
         Client client1 = clientService.add(client);
@@ -47,6 +50,11 @@ public class ClientRestController {
         } else {
             return "Success with id=" + client1.getId();
         }
+    }
+
+    @PostMapping("/users")
+    public Client addNewClient(@RequestBody Client client){
+        return clientService.add(client);
     }
 
     @GetMapping("/getall")

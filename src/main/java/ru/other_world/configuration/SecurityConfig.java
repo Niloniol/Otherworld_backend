@@ -1,6 +1,7 @@
 package ru.other_world.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,9 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.anyRequest()
                 .mvcMatchers( "/api/user/**").authenticated()
                 .and()
-                .cors()
-                .configurationSource(corsConfigurationSource())
-                .and()
                 .oauth2ResourceServer()
                 .jwt()
                 .decoder(jwtDecoder());
@@ -55,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 
+    @Bean
     JwtDecoder jwtDecoder() {
         OAuth2TokenValidator<Jwt> withAudience = new AudienceValidator(audience);
         OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuer);
