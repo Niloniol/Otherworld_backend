@@ -41,6 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .oauth2ResourceServer()
                 .jwt()
                 .decoder(jwtDecoder());
+
+        http.authorizeRequests().anyRequest().permitAll();
+        http.headers().frameOptions().sameOrigin();
     }
 
     CorsConfigurationSource corsConfigurationSource() {
