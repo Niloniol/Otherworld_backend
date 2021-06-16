@@ -30,9 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers( "/api/**").permitAll()
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 //.mvcMatchers( "/api/user/**").authenticated()
                 .and()
                 .cors()
@@ -42,7 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .jwt()
                 .decoder(jwtDecoder());
 
-        http.authorizeRequests().anyRequest().permitAll();
         http.headers().frameOptions().sameOrigin();
     }
 
