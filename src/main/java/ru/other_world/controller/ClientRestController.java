@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "api")
 public class ClientRestController {
 
     @Autowired
@@ -53,27 +52,27 @@ public class ClientRestController {
         }
     }
 
-    @PostMapping("/users")
+    @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Client addNewClient(@RequestBody Client client){
         return clientService.add(client);
     }
 
-    @GetMapping("/getall")
+    @GetMapping(value = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Client> getClientsList() {
         return clientService.listClients();
     }
 
-    @GetMapping("/getevents")
+    @GetMapping(value = "/getevents", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Event> getEvents() {
         return eventRepository.findAll();
     }
 
-    @DeleteMapping("/users/delete/{id}")
+    @DeleteMapping(value = "/users/delete/{id}")
     public boolean deleteClientByEmail(@PathVariable String email) {
         return clientService.removeByEmail(email);
     }
 
-    @GetMapping("users/{email}")
+    @GetMapping(value = "users/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Client getClientByEmail(@PathVariable String email){
         return clientService.getByEmail(email);
     }
