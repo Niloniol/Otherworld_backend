@@ -2,6 +2,7 @@ package ru.other_world.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,8 +68,13 @@ public class ClientRestController {
         return eventRepository.findAll();
     }
 
-    @GetMapping("user/{email}")
-    public Client getClientById(@PathVariable String email){
+    @DeleteMapping("/users/delete/{id}")
+    public boolean deleteClientByEmail(@PathVariable String email) {
+        return clientService.removeByEmail(email);
+    }
+
+    @GetMapping("users/{email}")
+    public Client getClientByEmail(@PathVariable String email){
         return clientService.getByEmail(email);
     }
 }

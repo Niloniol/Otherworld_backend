@@ -31,16 +31,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .anyRequest()
-                .permitAll()
+                .permitAll();
                 //.mvcMatchers( "/api/user/**").authenticated()
-                .and()
+                /*.and()
                 .cors()
                 .configurationSource(corsConfigurationSource())
                 .and()
                 .oauth2ResourceServer()
                 .jwt()
-                .decoder(jwtDecoder());
-
+                .decoder(jwtDecoder());*/
+        http.cors().and().csrf().disable();
         http.headers().frameOptions().sameOrigin();
     }
 
