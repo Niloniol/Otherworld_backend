@@ -41,7 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .jwt()
                 .decoder(jwtDecoder());*/
         http.cors().and().csrf().disable();
-        http.headers().frameOptions().sameOrigin();
     }
 
     CorsConfigurationSource corsConfigurationSource() {
